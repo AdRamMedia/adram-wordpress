@@ -1,0 +1,29 @@
+version: "3.3"
+services:
+  adram-wp:
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: ${DB_HOST}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+    image: wordpress:4.9
+    ports:
+      - 8080:80
+    volumes:
+      - ./adram:/var/www/html/wp-content/plugins/adram
+
+
+  mysql:
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: "root-secret"
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+
